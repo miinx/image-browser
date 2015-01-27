@@ -1,0 +1,4 @@
+Image Processor
+
+The Image Processor is a Ruby application that reads in an XML input file containing EXIF image data, & outputs a set of linked, static HTML pages which allow a user to browse the images.
+
