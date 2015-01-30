@@ -13,4 +13,8 @@ class Works
     images_from_camera_make = @images.select {|img| img.make == make }
     images_from_camera_make.map {|img| img.model }.uniq.sort
   end
+
+  def first_10_thumbs
+    images.take(10).map {|img| img.thumb }
+  end
 end
