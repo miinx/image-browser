@@ -3,36 +3,40 @@ require_relative "../spec_helper.rb"
 describe "Works" do
 
   before(:context) do
-    @works_many = Works.new(build_list(:work, 14, :canon_snappy))
+    @works = Works.new([
+      build_list(:work, 4, :canon_snappy),
+      build_list(:work, 7, :nikon_d80),
+      build_list(:work, 2, :canon_d80),
+      build_list(:work, 13, :canon_snappy)
+    ].flatten)
+  end
 
-    @works_mixed = Works.new([
-      build(:work, :nikon_d80),
-      build(:work, :canon_snappy),
-      build(:work, :canon_d80),
-      build(:work, :canon_snappy)
-      ])
+  def create_expected_thumbs(ary)
+      ary.map {|i| "thumb_#{i}.jpg" }
   end
 
 
   it "holds all the images" do
-    expect(@works_many.images.size).to eq(14)
+    expect(@works.images.size).to eq(26)
   end
 
   it "determines unique camera makes" do
-    expect(@works_mixed.unique_makes).to eq(["Canon", "Nikon"])
+    expect(@works.unique_makes).to eq(["Canon", "Nikon"])
   end
 
   it "determines unique camera models for a camera make" do
-    expect(@works_mixed.unique_models_for_make("Canon")).to eq(["D80", "Snappy"])
-    expect(@works_mixed.unique_models_for_make("Nikon")).to eq(["D80"])
+    expect(@works.unique_models_for_make("Canon")).to eq(["D80", "Snappy"])
+    expect(@works.unique_models_for_make("Nikon")).to eq(["D80"])
   end
 
-  it "retrieves the first 10 thumbnails" do
-    expected_thumbs = []
-    (1..10).each {|i| expected_thumbs.push("thumb_#{i}.jpg") }
-
-    expect(@works_many.first_10_thumbs).to eq(expected_thumbs)
+  it "retrieves the first 10 thumbnails of any make & model" do
+    expected_thumbs = create_expected_thumbs (1..10).to_a
+    expect(@works.first_10_thumbs).to eq(expected_thumbs)
   end
 
+  it "retrieves first 10 thumbnails for a particular camera make" do
+    expected_thumbs = create_expected_thumbs [1,2,3,4,12,13,14,15,16,17]
+    expect(@works.first_10_thumbs_for_make("Canon")).to eq(expected_thumbs)
+  end
 
 end
