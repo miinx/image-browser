@@ -5,6 +5,7 @@ describe "Parser" do
   before(:context) do
     @xml = "<works>" \
             "<work>" \
+            "<urls><url type='small'>http://test.com/small.jpg</url><url type='large'>http://test.com/large.jpg</url></urls>" \
             "<exif><make>Canon</make><model>Snappy</model></exif>" \
             "</work>" \
            "</works>"
@@ -24,6 +25,10 @@ describe "Parser" do
 
   it "parses the camera models" do
     expect(@parser.works[0].model).to eq("Snappy")
+  end
+
+  it "parses the thumbnails" do
+    expect(@parser.works[0].thumb).to eq("http://test.com/small.jpg")
   end
 
 end

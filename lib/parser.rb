@@ -42,4 +42,10 @@ class Parser < Nokogiri::XML::SAX::Document
     @current_work.model = model
   end
 
+  def on_url(url, attrs)
+    if attrs[0].include?("small")
+      @current_work.thumb = url
+    end
+  end
+
 end
