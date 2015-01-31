@@ -27,6 +27,11 @@ class Works
     first_10_thumbs_for all_images_of_make(make)
   end
 
+  def all_thumbs_of_make_model(make, model)
+    all_images_of_make_model = @images.select {|img| img.make == make && img.model == model }
+    all_images_of_make_model.map {|img| img.thumb }
+  end
+
   private
 
   def first_10_thumbs_for(ary)
