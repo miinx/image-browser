@@ -1,6 +1,6 @@
 require_relative "../spec_helper.rb"
 
-describe "Works" do
+describe Works do
 
   def create_expected_thumbs(ary)
       ary.map {|i| "thumb_#{i}.jpg" }

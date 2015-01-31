@@ -11,6 +11,7 @@ class Parser < Nokogiri::XML::SAX::Document
   def parse_input(input)
     sax_parser = Nokogiri::XML::SAX::Parser.new(self)
     sax_parser.parse(input)
+    @works
   end
 
   def start_element(name, attrs=[])

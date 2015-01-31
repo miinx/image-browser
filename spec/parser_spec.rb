@@ -1,6 +1,6 @@
 require_relative "spec_helper.rb"
 
-describe "Parser" do
+describe Parser do
 
   context "with a valid & complete work in xml" do
 
