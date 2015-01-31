@@ -7,7 +7,7 @@ describe "Works" do
   end
 
 
-  context "large input data set" do
+  context "with large input data set" do
 
     before(:context) do
       @works = Works.new([
@@ -43,6 +43,47 @@ describe "Works" do
 
     it "retrieves all thumbnails for a particular camera make & model" do
       expected_thumbs = create_expected_thumbs (1..4).to_a.concat (14..24).to_a
+      expect(@works.all_thumbs_of_make_model("Canon", "Snappy")).to eq(expected_thumbs)
+    end
+
+  end
+
+  context "with small input data set" do
+
+    before(:context) do
+      FactoryGirl.reload
+
+      @works = Works.new([
+        build(:work, :canon_snappy),
+        build(:work, :canon_d80)
+      ])
+    end
+
+    it "holds all the images" do
+      expect(@works.images.size).to eq(2)
+    end
+
+    it "determines unique camera makes" do
+      expect(@works.unique_makes).to eq(["Canon"])
+    end
+
+    it "determines unique camera models for a camera make" do
+      expect(@works.unique_models_for_make("Canon")).to eq(["D80", "Snappy"])
+    end
+
+    it "retrieves the first 10 thumbnails of any camera make & model" do
+      expected_thumbs = create_expected_thumbs [1,2]
+      expect(@works.first_10_thumbs).to eq(expected_thumbs)
+    end
+
+    it "retrieves first 10 thumbnails for a particular camera make" do
+      expected_thumbs = create_expected_thumbs [1,2]
+      expect(@works.first_10_thumbs_for_make("Canon")).to eq(expected_thumbs)
+      expect(@works.first_10_thumbs_for_make("Nikon")).to eq([])
+    end
+
+    it "retrieves all thumbnails for a particular camera make & model" do
+      expected_thumbs = create_expected_thumbs [1]
       expect(@works.all_thumbs_of_make_model("Canon", "Snappy")).to eq(expected_thumbs)
     end
 
