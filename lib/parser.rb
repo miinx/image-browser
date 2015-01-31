@@ -38,4 +38,8 @@ class Parser < Nokogiri::XML::SAX::Document
     @current_work.make = make
   end
 
+  def on_model(model, attrs)
+    @current_work.model = model
+  end
+
 end
