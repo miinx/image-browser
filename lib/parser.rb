@@ -15,6 +15,8 @@ class Parser < Nokogiri::XML::SAX::Document
 
   def start_element(name, attrs=[])
     @current_attrs = attrs
+    @current_characters = nil
+
     if name == "work"
       @current_work = Work.new
     end
@@ -31,7 +33,7 @@ class Parser < Nokogiri::XML::SAX::Document
   end
 
   def characters(characters)
-    @current_characters = characters
+    @current_characters = characters.strip
   end
 
   def on_make(make, attrs)
