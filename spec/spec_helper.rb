@@ -6,5 +6,7 @@ require_relative "factories/work.rb"
 
 RSpec.configure do |config|
   config.color = true
+  config.formatter = :documentation
+
   config.include FactoryGirl::Syntax::Methods
 end
