@@ -18,6 +18,13 @@ FactoryGirl.define do
       model "D80"
     end
 
+    trait :make_without_model do
+      make "Make Without Model"
+    end
+
+    trait :model_without_make do
+      model "Model Without Make"
+    end
   end
 
 end

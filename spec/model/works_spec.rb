@@ -88,4 +88,33 @@ describe "Works" do
 
   end
 
+  context "with input data that has missing make or model in image's camera info" do
+
+    before(:context) do
+      FactoryGirl.reload
+
+      @works = Works.new([
+        build(:work, :make_without_model),
+        build(:work, :model_without_make)
+      ])
+    end
+
+    it "holds all the images" do
+      expect(@works.images.size).to eq(2)
+    end
+
+    it "determines unique camera makes" do
+      expect(@works.unique_makes).to eq(["Make Without Model"])
+    end
+
+    it "returns empty value when camera make has missing model" do
+      expect(@works.unique_models_for_make("Make Without Model")).to eq([])
+    end
+
+    it "does not report unique models when camera make is empty" do
+      expect(@works.unique_models_for_make("")).to eq([])
+    end
+
+  end
+
 end
