@@ -13,14 +13,14 @@ describe "Works" do
       @works = Works.new([
         build_list(:work, 4, :canon_snappy),
         build(:work),
-        build_list(:work, 7, :nikon_d80),
-        build_list(:work, 2, :canon_d80),
-        build_list(:work, 11, :canon_snappy)
+        build_list(:work, 2, :nikon_d80),
+        build_list(:work, 1, :canon_d80),
+        build_list(:work, 8, :canon_snappy)
       ].flatten)
     end
 
     it "holds all the images" do
-      expect(@works.images.size).to eq(25)
+      expect(@works.images.size).to eq(16)
     end
 
     it "determines unique camera makes" do
@@ -38,18 +38,18 @@ describe "Works" do
     end
 
     it "retrieves first 10 thumbnails for a particular camera make" do
-      expected_thumbs = create_expected_thumbs [1,2,3,4,13,14,15,16,17,18]
+      expected_thumbs = create_expected_thumbs [1,2,3,4,8,9,10,11,12,13]
       expect(@works.first_10_thumbs_for_make("Canon")).to eq(expected_thumbs)
     end
 
     it "retrieves all thumbnails for a particular camera make & model" do
-      expected_thumbs = create_expected_thumbs (1..4).to_a.concat (15..25).to_a
+      expected_thumbs = create_expected_thumbs [1,2,3,4,9,10,11,12,13,14,15,16]
       expect(@works.all_thumbs_of_make_model("Canon", "Snappy")).to eq(expected_thumbs)
     end
 
   end
 
-  context "with small input data set" do
+  context "with small input data set of less than 10 images" do
 
     before(:context) do
       FactoryGirl.reload
@@ -61,34 +61,22 @@ describe "Works" do
       ])
     end
 
-    it "holds all the images" do
-      expect(@works.images.size).to eq(3)
-    end
-
-    it "determines unique camera makes" do
-      expect(@works.unique_makes).to eq(["Canon"])
-    end
-
-    it "determines unique camera models for a camera make" do
-      expect(@works.unique_models_for_make("Canon")).to eq(["D80", "Snappy"])
-    end
-
-    it "retrieves all thumbnails of any camera make & model when there are less than 10" do
+    it "retrieves all thumbnails of any camera make & model" do
       expect(@works.first_10_thumbs).to eq(create_expected_thumbs [1,2,3])
     end
 
-    it "retrieves all thumbnails for a particular camera make when there are less than 10" do
+    it "retrieves all thumbnails for a particular camera make" do
       expect(@works.first_10_thumbs_for_make("Canon")).to eq(create_expected_thumbs [2,3])
       expect(@works.first_10_thumbs_for_make("Nikon")).to eq([])
     end
 
-    it "retrieves all thumbnails for a particular camera make & model when there are less than 10" do
+    it "retrieves all thumbnails for a particular camera make & model" do
       expect(@works.all_thumbs_of_make_model("Canon", "Snappy")).to eq(create_expected_thumbs [2])
     end
 
   end
 
-  context "with input data that has missing make or model in image's camera info" do
+  context "with input data that has incomplete camera info" do
 
     before(:context) do
       FactoryGirl.reload
@@ -99,15 +87,11 @@ describe "Works" do
       ])
     end
 
-    it "holds all the images" do
-      expect(@works.images.size).to eq(2)
-    end
-
     it "determines unique camera makes" do
       expect(@works.unique_makes).to eq(["Make Without Model"])
     end
 
-    it "returns empty value when camera make has missing model" do
+    it "returns empty unique models value when camera make has missing model" do
       expect(@works.unique_models_for_make("Make Without Model")).to eq([])
     end
 
