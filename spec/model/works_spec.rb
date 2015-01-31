@@ -73,16 +73,16 @@ describe "Works" do
       expect(@works.unique_models_for_make("Canon")).to eq(["D80", "Snappy"])
     end
 
-    it "retrieves the first 10 thumbnails of any camera make & model" do
+    it "retrieves all thumbnails of any camera make & model when there are less than 10" do
       expect(@works.first_10_thumbs).to eq(create_expected_thumbs [1,2,3])
     end
 
-    it "retrieves first 10 thumbnails for a particular camera make" do
+    it "retrieves all thumbnails for a particular camera make when there are less than 10" do
       expect(@works.first_10_thumbs_for_make("Canon")).to eq(create_expected_thumbs [2,3])
       expect(@works.first_10_thumbs_for_make("Nikon")).to eq([])
     end
 
-    it "retrieves all thumbnails for a particular camera make & model" do
+    it "retrieves all thumbnails for a particular camera make & model when there are less than 10" do
       expect(@works.all_thumbs_of_make_model("Canon", "Snappy")).to eq(create_expected_thumbs [2])
     end
 
