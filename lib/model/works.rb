@@ -7,7 +7,7 @@ class Works
 
   def unique_makes
     all_makes = @images.map {|img| img.make }
-    all_makes.uniq.sort
+    all_makes.uniq.compact.sort
   end
 
   def all_images_of_make(make)
@@ -16,7 +16,7 @@ class Works
 
   def unique_models_for_make(make)
     models_for_make = all_images_of_make(make).map {|img| img.model }
-    models_for_make.uniq.sort
+    models_for_make.uniq.compact.sort
   end
 
   def first_10_thumbs
