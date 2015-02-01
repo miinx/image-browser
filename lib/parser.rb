@@ -1,4 +1,5 @@
 require "nokogiri"
+require_relative "model/work.rb"
 
 class Parser < Nokogiri::XML::SAX::Document
 
