@@ -1,13 +1,12 @@
 require "erb"
 require_relative "works.rb"
+require_relative "link.rb"
 
 class Page
   attr_reader :title, :url, :nav_links, :thumbs
 
-  def links_for(subdir, page_names)
-    page_names.inject({}) do |h, pg|
-      h.merge(pg => "#{subdir}/#{pg.downcase}.html")
-    end
+  def links_for(dir_path, page_names)
+    page_names.map {|pg| Link.new(pg, "#{dir_path}/#{pg.downcase}.html") }
   end
 
   def render(target_dir)
