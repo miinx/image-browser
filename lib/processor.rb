@@ -1,3 +1,5 @@
+require "fileutils"
+
 class Processor
 
   attr_writer :parser
@@ -10,10 +12,15 @@ class Processor
 
   def create_gallery
     parse_input
+    create_output_directory
   end
 
   def parse_input
     @works = @parser.parse_input(File.read(@input_file))
+  end
+
+  def create_output_directory
+    FileUtils.mkdir_p @output_dir
   end
 
 end

@@ -14,4 +14,10 @@ describe Processor do
     @processor.parse_input
   end
 
+  it "should create the output directory" do
+    fileutils = double(FileUtils)
+    expect(FileUtils).to receive(:mkdir_p).with("target")
+    @processor.create_output_directory
+  end
+
 end
