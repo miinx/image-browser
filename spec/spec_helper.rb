@@ -2,6 +2,7 @@ require "factory_girl"
 
 require_relative "../lib/model/work.rb"
 require_relative "../lib/model/works.rb"
+require_relative "../lib/model/page.rb"
 require_relative "../lib/parser.rb"
 require_relative "../lib/processor.rb"
 require_relative "factories/work.rb"
