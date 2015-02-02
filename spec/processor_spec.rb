@@ -17,7 +17,7 @@ describe Processor do
   it "should create the output directory" do
     fileutils = double(FileUtils)
     expect(FileUtils).to receive(:mkdir_p).with("target")
-    @processor.create_output_directory
+    @processor.create_output_directory("target")
   end
 
 end

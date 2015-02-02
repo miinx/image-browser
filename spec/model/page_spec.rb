@@ -3,14 +3,14 @@ require_relative "../spec_helper.rb"
 describe Page do
 
   before(:context) do
-    @camera_makes = ["Canon"]
+    @camera_makes = ["Canon Foo-Bar., Ltd."]
     @page = Page.new
   end
 
-  it "creates links" do
+  it "creates links with uppercase names and snake-cased urls without punctuation" do
     allow(Link).to receive(:new)
     @page.links_for("makes", @camera_makes)
-    expect(Link).to have_received(:new).with("Canon", "makes/canon.html")
+    expect(Link).to have_received(:new).with("CANON FOO-BAR., LTD.", "makes/canon_foo_bar_ltd.html")
   end
 
   it "writes a page to target directory" do
@@ -28,7 +28,6 @@ describe Page do
     expect(File).to have_received(:read)
     expect(ERB).to have_received(:new).with(erb_template)
     expect(File).to have_received(:join)
-
   end
 
 end
