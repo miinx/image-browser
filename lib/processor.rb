@@ -18,8 +18,11 @@ class Processor
     create_pages
   end
 
+  private
+
   def parse_input
-    @images = @parser.parse_input(File.read(@input_file))
+    images = @parser.parse_input(File.read(@input_file))
+    @works = Works.new(images)
   end
 
   def create_output_directory(dir)
@@ -27,7 +30,6 @@ class Processor
   end
 
   def create_pages
-    @works = Works.new(@images)
     create_index_page
     create_camera_make_pages
   end
@@ -37,9 +39,19 @@ class Processor
   end
 
   def create_camera_make_pages
-    create_output_directory("#{@output_dir}/camera_makes")
+    create_output_directory("#{@output_dir}/cameras")
     @works.unique_makes.each do |make|
       CameraMakePage.new(@works, make).render(@output_dir)
+      create_camera_model_pages(make)
+    end
+  end
+
+  def create_camera_model_pages(make)
+    return if @works.unique_models_for_make(make) == []
+
+    create_output_directory("#{@output_dir}/cameras/#{make.snakeize}")
+    @works.unique_models_for_make(make).each do |model|
+      CameraModelPage.new(@works, make, model).render(@output_dir)
     end
   end
 

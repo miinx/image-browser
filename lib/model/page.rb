@@ -17,7 +17,6 @@ class Page
   def render(target_dir)
     renderer = ERB.new(File.read("lib/view/output-template.html.erb"))
     output_file = File.join(target_dir, @url)
-
     File.open(output_file, "w") do |f|
       f.write renderer.result(binding)
     end
@@ -25,26 +24,35 @@ class Page
 
 end
 
-
 class IndexPage < Page
 
   def initialize(works)
     @title = "Index"
     @url = "index.html"
-    @nav_links = links_for("camera_makes", works.unique_makes)
+    @nav_links = links_for("cameras", works.unique_makes)
     @thumbs = works.first_10_thumbs
   end
 
 end
 
-
 class CameraMakePage < Page
 
   def initialize(works, make)
     @title = make.upcase
-    @url = "camera_makes/#{make.snakeize}.html"
-    @nav_links = links_for("camera_models", works.unique_models_for_make(make))
+    @url = "cameras/#{make.snakeize}.html"
+    @nav_links = links_for("../..", ["Index"]).concat(links_for("#{make.snakeize}", works.unique_models_for_make(make)))
     @thumbs = works.first_10_thumbs_for_make(make)
+  end
+
+end
+
+class CameraModelPage < Page
+
+  def initialize(works, make, model)
+    @title = "#{make} #{model}".upcase
+    @url = "cameras/#{make.snakeize}/#{model.snakeize}.html"
+    @nav_links = links_for("../..", ["Index"]).concat(links_for("..", ["#{make}"]))
+    @thumbs = works.all_thumbs_of_make_model(make, model)
   end
 
 end
