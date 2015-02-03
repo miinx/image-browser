@@ -6,9 +6,9 @@ class Processor
 
   attr_writer :parser
 
-  def initialize(input, output)
-    @input_file = input
-    @output_dir = output
+  def initialize(args)
+    @input_file = args.fetch(:input_file, "")
+    @output_dir = args.fetch(:target, "")
     @parser = Parser.new
   end
 

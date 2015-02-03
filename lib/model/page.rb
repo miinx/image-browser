@@ -40,7 +40,7 @@ class CameraMakePage < Page
   def initialize(works, make)
     @title = make.upcase
     @url = "cameras/#{make.snakeize}.html"
-    @nav_links = links_for("../..", ["Index"]).concat(links_for("#{make.snakeize}", works.unique_models_for_make(make)))
+    @nav_links = links_for("..", ["Index"]).concat(links_for("#{make.snakeize}", works.unique_models_for_make(make)))
     @thumbs = works.first_10_thumbs_for_make(make)
   end
 
@@ -49,7 +49,7 @@ end
 class CameraModelPage < Page
 
   def initialize(works, make, model)
-    @title = "#{make} #{model}".upcase
+    @title = model.index(make).nil? ? "#{make} #{model}".upcase : "#{model}".upcase
     @url = "cameras/#{make.snakeize}/#{model.snakeize}.html"
     @nav_links = links_for("../..", ["Index"]).concat(links_for("..", ["#{make}"]))
     @thumbs = works.all_thumbs_of_make_model(make, model)
