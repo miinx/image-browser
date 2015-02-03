@@ -1,6 +1,9 @@
 require "fileutils"
 require_relative "parser.rb"
 require_relative "model/page.rb"
+require_relative "model/pages/index_page.rb"
+require_relative "model/pages/camera_make_page.rb"
+require_relative "model/pages/camera_model_page.rb"
 
 class Processor
 
