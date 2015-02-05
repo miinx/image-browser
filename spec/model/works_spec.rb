@@ -3,7 +3,7 @@ require_relative "../spec_helper.rb"
 describe Works do
 
   def create_expected_thumbs(ary)
-      ary.map {|i| "thumb_#{i}.jpg" }
+      ary.map { |i| "thumb_#{i}.jpg" }
   end
 
 
@@ -19,8 +19,8 @@ describe Works do
       ].flatten)
     end
 
-    it "holds all the images" do
-      expect(@works.images.size).to eq(16)
+    it "holds all the works" do
+      expect(@works.works.size).to eq(16)
     end
 
     it "determines unique camera makes" do
@@ -49,7 +49,7 @@ describe Works do
 
   end
 
-  context "with small input data set of less than 10 images" do
+  context "with small input data set of less than 10 works" do
 
     before(:context) do
       FactoryGirl.reload

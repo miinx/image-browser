@@ -1,5 +1,5 @@
 require "fileutils"
-require_relative "parser.rb"
+require_relative "work_builder.rb"
 require_relative "model/page.rb"
 require_relative "model/pages/index_page.rb"
 require_relative "model/pages/camera_make_page.rb"
@@ -12,7 +12,7 @@ class Processor
   def initialize(args)
     @input_file = args.fetch(:input_file, "")
     @output_dir = args.fetch(:target, "")
-    @parser = Parser.new
+    @work_builder = WorkBuilder.new
   end
 
   def create_gallery
@@ -24,8 +24,8 @@ class Processor
   private
 
   def parse_input
-    images = @parser.parse_input(File.read(@input_file))
-    @works = Works.new(images)
+    works = @work_builder.parse_input(File.read(@input_file))
+    @works = Works.new(works)
   end
 
   def create_output_directory(dir)

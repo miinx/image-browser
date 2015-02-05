@@ -15,7 +15,7 @@ class Page
   end
 
   def links_for(dir_path, page_names)
-    page_names.map {|pg| Link.new(pg.upcase, "#{dir_path}/#{pg.snakeize}.html") }
+    page_names.map { |pg| Link.new(pg.upcase, "#{dir_path}/#{pg.snakeize}.html") }
   end
 
   def render(target_dir)
