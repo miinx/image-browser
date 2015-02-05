@@ -20,7 +20,7 @@ describe Works do
     end
 
     it "holds all the works" do
-      expect(@works.works.size).to eq(16)
+      expect(@works.size).to eq(16)
     end
 
     it "determines unique camera makes" do

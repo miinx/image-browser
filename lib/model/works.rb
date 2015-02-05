@@ -6,6 +6,10 @@ class Works
     @works = works
   end
 
+  def size
+    @works.size
+  end
+
   def unique_makes
     all_makes = @works.map { |img| img.make }
     all_makes.uniq.compact.sort
